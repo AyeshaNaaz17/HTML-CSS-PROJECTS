@@ -1,0 +1,66 @@
+@use '../util' as u;
+
+%widget {
+    padding: u.rem(16);
+}
+
+.grid {
+    display: grid; //displays it in grid form but just writing this won't work
+    grid-template-columns: 1fr; // 1 fraction, unit of grid
+    grid-template-rows: auto auto; // makes the grid laying line solid instead of dashed(inspect-layout-display:grid)
+    gap: u.rem(40);
+    // max-width: 1000px;
+    width: min(100% - u.rem(40), u.rem(1000));
+    margin-inline: auto; // top right bottom left
+    // padding-left: 20px;  ^
+    // padding-right: 20px; |
+    font-size: 2rem;
+
+    $size:  large;
+    // @media (min-width: 900px)
+    @include u.breakpoint($size) {
+        
+        @include breakpoint("large"){
+            grid-template-columns: 2fr 1fr; // 1st column double of 2nd column
+            grid-template-rows: auto;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    &__main, &__sidebar {
+        padding: u.rem(40);
+    }
+
+    &__main {
+        background-color: hsl(240, 99%, 33%);
+
+    }
+    &__sidebar {
+        @include u.breakpoint-down("medium") {
+            text-align: center;
+        }
+
+        // @media (max-width: 56.25em) {
+        //     text-align: center;
+        // }
+
+        @include u.breakpoint-down("small") {
+            text-align: right;
+        }
+    }
+    &__widget {
+        // $widget: &;
+        
+        &--magenta {
+            @extend %widget;
+            background-color: hsl(300, 100%, 30%);
+        }
+
+        &--green {
+            // @extend #{$widget};
+            @extend %widget;
+            background-color: hsl(120, 100%, 27%);
+        }
+    }
+}
